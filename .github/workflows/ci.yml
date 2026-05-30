@@ -1,0 +1,24 @@
+name: Closed‑Loop ML Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Generate data
+        run: python src/generate_data.py
+      - name: Train champion model
+        run: python src/train.py
+      - name: Simulate monitoring
+        run: python src/monitor.py
+      - name: Run orchestrator (retrain/rollback)
+        run: python src/orchestrator.py
