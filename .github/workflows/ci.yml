@@ -14,6 +14,9 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Create required directories
+        run: |
+          mkdir -p data models
       - name: Generate data
         run: python src/generate_data.py
       - name: Train champion model
